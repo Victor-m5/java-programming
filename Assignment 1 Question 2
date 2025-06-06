@@ -1,0 +1,44 @@
+import java.io.Console;
+
+public class LoginSystem {
+    public static void main(String[] args) {
+        // Define a valid username and password for demonstration
+        String validUsername = "victor";
+        String validPassword = "12345678";
+
+        // Get the console object
+        Console console = System.console();
+        
+        // Check if the console is available (not available in some IDEs)
+        if (console == null) {
+            System.out.println("No console available. Run this program in a terminal.");
+            return;
+        }
+
+        int attempts = 0; // Counter for login attempts
+        boolean loggedIn = false; // Flag to check if user is logged in
+
+        // Allow the user up to 3 attempts to log in
+        while (attempts < 3 && !loggedIn) {
+            // Prompt user for username
+            String username = console.readLine("Enter username: ");
+
+            // Prompt user for password, masking input with '*'
+            char[] passwordArray = console.readPassword("Enter password: ");
+            String password = new String(passwordArray); // Convert char array to String
+
+            // Check if the entered username and password are correct
+            if (username.equals(validUsername) && password.equals(validPassword)) {
+                loggedIn = true; // Set the flag to true if login is successful
+                System.out.println("Login successful!"); // Notify user of success
+            } else {
+                attempts++; // Increment attempts
+                System.out.println("Invalid username or password. Attempts left: " + (3 - attempts));
+            }
+        }
+
+        if (!loggedIn) {
+            System.out.println("Too many failed attempts. Access denied."); // Notify user of failure
+        }
+    }
+}
